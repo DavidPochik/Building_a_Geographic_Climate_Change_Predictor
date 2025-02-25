@@ -17,6 +17,6 @@ Today's Texas Might be Tomorrow's Ohio: Building a Geographic Climate Change Pre
 
 7. Key Performance Indicators:
 
-8. Stakeholders:
+8. Stakeholders: Homeowners Y years from now, energy suppliers, climate change education programs, realty agencies
 
 9. Purpose - Extrapolate historic geographical climate trends to modern and future locations. Provide details for how much regions will change if their temperatures change by a rate Z over a time period Y. These models will be useful for putting climate change in understandable terms for a general audience and provide concrete examples of its impact.
