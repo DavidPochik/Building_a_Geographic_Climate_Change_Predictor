@@ -15,8 +15,8 @@ Today's Texas Might be Tomorrow's Ohio: Building a Geographic Climate Change Pre
 
 6. Modelling methods: time-series analysis, linear regression models (SLR and MLR).
 
-7. Key Performance Indicators:
+7. Key Performance Indicators: Benchmarking model by showing that our model predicts the current average temperatures (monthly/annual) based on prior data (Z years ago) within some % threshold.
 
-8. Stakeholders: Homeowners Y years from now, energy suppliers, climate change education programs, realty agencies
+8. Stakeholders: Homeowners Y years from now, energy suppliers, climate change education programs, realty agencies, home insurance providers
 
 9. Purpose - Extrapolate historic geographical climate trends to modern and future locations. Provide details for how much regions will change if their temperatures change by a rate Z over a time period Y. These models will be useful for putting climate change in understandable terms for a general audience and provide concrete examples of its impact.
