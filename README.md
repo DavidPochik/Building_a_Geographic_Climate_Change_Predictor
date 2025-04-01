@@ -33,6 +33,8 @@ The major steps in this project include:
 
 <code>datagen_scripts</code> contains the script(s) used to generate the <code>.csv</code> files used for this project
 
+<code>plots</code> contains select figures from the exploratory data analysis process under the <code>EDA</code> subdirectory and final presentation plots under the <code>Presentable</code> subdirectory.
+
 <code>analysis_scripts</code> contains the scripts used for performing exploratory data analysis, creating structured grids, building predictive models, and performing error analysis.
 <ol>
 <li><code>latitude_longitude_grid.py</code>: Organizes climate data into user-specified latitude/longitude grid lines with refinement <code>nlat</code> and <code>nlong</code>. Defaults are set to <code>10</code>. Computes mean temperature, precipitation, and snowfall within each grid cell for user-specified <code>years</code>. Creates a train/test time-series split and performs simple linear regression on mean climate quantities.</li>
