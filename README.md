@@ -3,7 +3,7 @@
 
 <p> <strong>Today's Texas Might be Tomorrow's Ohio: Building a Geographic Climate Change Predictor</strong> </p>
 
-This project explores and analyzes geographical climate change data in the United States of America from 1950 to the current year. The objective is to <strong>predict</strong> regional features, e.g., temperature, precipication, or snowfall, for a given year based on historical data.
+This project explores and analyzes geographical climate change data in the contiguous United States from 1950 to the current year. The objective is to <strong>predict</strong> regional features, e.g., temperature, precipication, or snowfall, for a given year based on historical data.
 
 This project uses raw data from the National Climatic Data Center and the U.S. Energy Information Administration.
 
@@ -13,6 +13,7 @@ The major steps in this project include:
 <ol>
 <li>Acquire climate data for the entire United States from 1950 until now ($\sim10^6$ weather station datapoints) </li>
 <li>Remove 'dirty' data, i.e., NaNs or empty entries. </li>
+<li>Limit our scope to the contiguous United States for simplicity.</li>
 </ol>
 <li>Spatially organizing data </li>
 <ol>
@@ -23,10 +24,8 @@ The major steps in this project include:
 <li>Perform error analysis to determine model performance</li>
 <ol>
 <li>Evaluate KPIs </li>
-</ol>
-<ol>
 <li>Use best performing models to make future predictions on climate data</li>
-<ol>
+</ol>
 <li>Compare climate features between different regions and address the statement of the proposal</li>
 </ol>
 
