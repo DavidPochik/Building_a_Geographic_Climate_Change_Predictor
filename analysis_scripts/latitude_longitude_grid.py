@@ -7,6 +7,7 @@ import time
 import plotly.express as px
 import plotly.io as pio
 from sklearn.linear_model import LinearRegression
+from sklearn.metrics import root_mean_squared_error
 sns.set_style("whitegrid")
 
 # Specify directory string in which you have the data file stored
@@ -217,10 +218,20 @@ temptest, prcptest, snowtest, lattest, longtest, gridcount = \
                      soln_type=soln_type, 
                      plotdata=plotdata)
 
+def RMSe(test, forecast, nH, nLat, nLong):
+    errors = np.zeros(shape=(nLat, nLong))
+    for i in range(0,nLat):
+        for j in range(0,nLong):
+            errors[i,j] = root_mean_squared_error(test[0:nHorizon,i,j], forecast[0:nHorizon,i,j])
+    return errors 
+
 # Forecast data
 temp_forecast = forecasting(years=years, nlat=nlat, nlong=nlong, 
                               nHorizon=nHorizon, traindata=temptrain, 
                               reg_model=reg_model)
+
+
+errors = RMSe(test=temptest, forecast=temp_forecast, nH=nHorizon, nLat=nlat, nLong=nlong) 
 
 fs_label  = 15
 fs_tick   = 14
@@ -230,7 +241,7 @@ plt.figure(0)
 plt.plot(years[0:len(years)-nHorizon], temptrain[:,ilat,ilong] * 9./5. + 32., linewidth=3.0, color='black', label='train data')
 plt.plot(years[len(years)-nHorizon:len(years)], temp_forecast[:,ilat,ilong] * 9./5. + 32., linewidth=1.5, color='red', linestyle='dashed', label=r'forecast')
 plt.plot(years[len(years)-nHorizon:len(years)], temptest[:,ilat,ilong] * 9./5. + 32, linewidth=3.0, color='blue', label='test data')
-plt.title('lat x long = ' + '{:.3f}'.format(lattrain[0,ilat]) + ' x ' + '{:.3f}'.format(longtrain[0,ilong]))
+plt.title('lat x long = ' + '{:.3f}'.format(lattrain[0,ilat]) + ' x ' + '{:.3f}'.format(longtrain[0,ilong]) + ', RMS error: ' + '{:.3e}'.format(errors[ilat, ilong]))
 plt.tick_params(axis='x', labelsize=fs_tick)
 plt.xlabel(r'Year', fontsize = fs_label)
 plt.ylabel(r'$T$ [degrees Fahrenheit]', fontsize = fs_label)
