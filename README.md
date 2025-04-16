@@ -7,6 +7,7 @@ This project explores and analyzes geographical climate change data in the conti
 
 This project uses raw data from the National Climatic Data Center.
 
+## Project Overview
 The major steps in this project include:
 <ol>
 <li>Obtain and clean climate data. </li>
@@ -29,6 +30,7 @@ The major steps in this project include:
 <li>Compare climate features between different regions and address the statement of the proposal</li>
 </ol>
 
+## Directories and Scripts
 <code>deliverables</code> contains the project proposal, mission plan, KPIs, and list of stakeholders.
 
 <code>datagen_scripts</code> contains the script(s) used to generate the <code>.csv</code> files used for this project
@@ -46,4 +48,15 @@ The major steps in this project include:
 <ol>
 <li>User must specify the directory in which the data are stored when running the script</li>
 </ol>
+</ol>
+
+## Software Requirements
+The analysis scripts run on <code>Python</code> (version 3.12.x or later). The Python packages required for <code>latitude_longitude_grid.py</code> are:
+<ol>
+<li><code>pandas</code></li>
+<li><code>numpy</code></li>
+<li><code>matplotlib</code></li>
+<li><code>seaborn</code></li>
+<li><code>sklearn</code></li>
+<li><code>sys</code></li>
 </ol>
