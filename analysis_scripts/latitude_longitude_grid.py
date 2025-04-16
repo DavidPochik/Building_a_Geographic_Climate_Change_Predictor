@@ -3,12 +3,8 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-import time
-import plotly.express as px
-import plotly.io as pio
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import root_mean_squared_error
-import csv
 import sys
 from sklearn.pipeline import Pipeline 
 from sklearn.preprocessing import StandardScaler
