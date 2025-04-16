@@ -37,11 +37,13 @@ The major steps in this project include:
 
 <code>data</code> contains the zipped data used for this project.
 <ol>
-<li>Execute <code>cd data/</code> and <code>tar -xzvf compressedFile.tar.gz</code> to extract the data before running any of the analysis scripts</li>.
+<li>Execute <code>cd data/</code> and <code>tar -xzvf compressedFile.tar.gz</code> to extract the data before running any of the analysis scripts.</li>
 </ol>
 
 <code>analysis_scripts</code> contains the scripts used for performing exploratory data analysis, creating structured grids, building predictive models, and performing error analysis.
 <ol>
 <li><code>latitude_longitude_grid.py</code>: Organizes climate data into user-specified latitude/longitude grid lines with refinement <code>nlat</code> and <code>nlong</code>. Defaults are set to <code>10</code>. Computes mean temperature (min, max, and avg), precipitation, snowfall, and heating degree days within each grid cell for user-specified <code>years</code>. Creates a train/test time-series split with n-fold cross validation and performs simple linear regression on mean climate quantities.</li>
+<ol>
 <li>User must specify the directory in which the data are stored when running the script</li>
+</ol>
 </ol>
