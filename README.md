@@ -8,13 +8,14 @@ This project explores and analyzes geographical climate change data in the conti
 This project uses raw data from the National Climatic Data Center.
 
 ## Project Overview
-The major steps in this project include:
+The major steps in this project include the following:
 <ol>
 <li>Obtain and clean climate data. </li>
 <ol>
 <li>Acquire climate data for the entire United States from 1950 until now ($\sim10^6$ weather station datapoints) </li>
 <li>Remove 'dirty' data, i.e., NaNs or empty entries. </li>
 <li>Limit our scope to the contiguous United States for simplicity.</li>
+<li>Compute mean features in each discretized region to simplify dataover head and allow for broader comparisons.</li>
 </ol>
 <li>Spatially organizing data </li>
 <ol>
