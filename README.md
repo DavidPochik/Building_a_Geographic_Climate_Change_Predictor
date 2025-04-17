@@ -60,4 +60,6 @@ The analysis scripts run on <code>Python</code> (version 3.12.x or later). The P
 <li><code>seaborn</code></li>
 <li><code>sklearn</code></li>
 <li><code>sys</code></li>
+<li><code>plotly.express</code></li>
+<li><code>plotly.io</code></li>
 </ol>
