@@ -35,24 +35,30 @@ The major steps in this project include the following:
 <code>deliverables</code> contains the project proposal, mission plan, KPIs, and list of stakeholders.
 
 <code>datagen_scripts</code> contains the script(s) used to generate the <code>.csv</code> files used for this project
+<ol>
+<li><code>gen_combined_csv.py</code>: Takes raw NOAA climate base data and compiles a single <code>.csv</code> file with all the data.</li>
+<li><code>gen_feature_counts_plot.py</code>: Plots number of data points per year for each weather station and feature variable.</li>
+</ol>
 
 <code>plots</code> contains select figures from the exploratory data analysis process under the <code>EDA</code> subdirectory and final presentation plots under the <code>Presentable</code> subdirectory.
 
 <code>data</code> contains the zipped data used for this project.
 <ol>
-<li>Execute <code>cd data/</code> and <code>tar -xzvf compressedFile.tar.gz</code> to extract the data before running any of the analysis scripts.</li>
+<li>Execute <code>cd data/</code> and <code>tar -xzvf compressedFile.tar.gz</code> to extract the data used in this project.</li>
 </ol>
 
 <code>analysis_scripts</code> contains the scripts used for performing exploratory data analysis, creating structured grids, building predictive models, and performing error analysis.
 <ol>
 <li><code>latitude_longitude_grid.py</code>: Organizes climate data into user-specified latitude/longitude grid lines with refinement <code>nlat</code> and <code>nlong</code>. Defaults are set to <code>10</code>. Computes mean temperature (min, max, and avg), precipitation, snowfall, and heating degree days within each grid cell for user-specified <code>years</code>. Creates a train/test time-series split with n-fold cross validation and performs simple linear regression on mean climate quantities.</li>
+<li><code>KMeans_Binning.py</code>: </li>
+<li><code>alison_temp_map.py</code>: </li>
 <ol>
 <li>User must specify the directory in which the data are stored when running the script</li>
 </ol>
 </ol>
 
 ## Software Requirements
-The analysis scripts run on <code>Python</code> (version 3.12.x or later). The Python packages required for <code>latitude_longitude_grid.py</code> are:
+The analysis scripts run on <code>Python</code> (version 3.12.x or later). The Python packages required for running all scripts are:
 <ol>
 <li><code>pandas</code></li>
 <li><code>numpy</code></li>
@@ -62,4 +68,6 @@ The analysis scripts run on <code>Python</code> (version 3.12.x or later). The P
 <li><code>sys</code></li>
 <li><code>plotly.express</code></li>
 <li><code>plotly.io</code></li>
+<li><code>os</code></li>
+<li><code>cartopy</code></li>
 </ol>
