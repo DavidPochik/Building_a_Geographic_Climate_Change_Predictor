@@ -15,10 +15,12 @@ from sklearn.preprocessing import StandardScaler
 sns.set_style("whitegrid")
 
 # Specify directory string in which you have the data file stored
-user_specified_directory = '/mnt/d/Erdos_DIR/project_data_TAWNYFILE_DIR/combined_us_GSOY_data.csv'
+user_specified_directory = '../data/combined_us_GSOY_data.csv'
 
 # Read in data
 data = pd.read_csv(user_specified_directory)
+
+# Convert temperature to K and compute TAVG
 data['TMIN'] = data['TMIN'] + 273.15
 data['TMAX'] = data['TMAX'] + 273.15
 data['TAVG'] = (data['TMIN'] + data['TMAX']) / 2.0
