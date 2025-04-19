@@ -3,11 +3,11 @@
 
 <p> <strong>Today's Texas Might be Tomorrow's Ohio: Building a Geographic Climate Change Predictor</strong> </p>
 
-This project explores and analyzes geographical climate change data in the contiguous United States from 1950 to the current year. The objective is to <strong>predict</strong> regional features, e.g., temperature, precipication, or snowfall, for a given year based on historical data.
-
-This project uses raw data from the National Climatic Data Center.
-
 ## Project Overview
+From the dawn of industrialization to today, the average global temperature has shifted upward by ~2.7 degrees Fahrenheit (~1.5 degrees Celsius) due to increased greenhouse gas emissions. The effects of this temperature increase have led to, among many other complications, more extreme weather patterns, increased sea levels, and hotter days. If emissions are left unchecked and temperatures continue to rise at their current (or projected) rate, then this will lead to drastic shifts in regional climate. For example, today's annual average temperature in Ohio will increase to that of today's annual temperature in Texas in Y years.
+
+This project explores and analyzes geographical climate change data in the contiguous United States from 1950 to the current year. The objective is to <strong>predict</strong> regional features, e.g., temperature, precipitation, or snowfall, for a given year based on historical data, i.e., if I want to live in an area Y years from now that has roughly the same temperature or climate as region X today, where would I go?
+
 The major steps in this project include the following:
 <ol>
 <li>Obtain and clean climate data. </li>
@@ -32,7 +32,7 @@ The major steps in this project include the following:
 </ol>
 
 ## Project data
-<code>data</code> contains the zipped data used for this project.
+This project uses raw data from the NOAA National Climatic Data Center. <code>data</code> contains the zipped data used for this project.
 <ol>
 <li>Execute <code>cd data/</code> and <code>tar -xzvf compressedFile.tar.gz</code> to extract the data used in this project.</li>
 </ol>
@@ -47,6 +47,10 @@ The scripts under <code>datagen_scripts</code> may be used to produce different 
 <li><code>gen_combined_csv.py</code>: Takes raw NOAA climate base data and compiles a single <code>.csv</code> file with all the data.</li>
 <li><code>gen_feature_counts_plot.py</code>: Plots number of data points per year for each weather station and feature variable.</li>
 </ol>
+
+<code>executive_summary</code> contains the document that summarizes the approach + findings of this project
+
+<code>presentation_slides</code> contains the document used to present this project.
 
 <code>plots</code> contains select figures from the exploratory data analysis process under the <code>EDA</code> subdirectory and final presentation plots under the <code>Presentable</code> subdirectory.
 

@@ -37,7 +37,7 @@
 </ol>
 </ol>
 
-<li> We will investigate the efficacy of SLR and MLR (e.g., temperature may strongly depend on region and snowfall) for forecasting regional climate features. </li>
+<li> We will investigate the efficacy of SLR for forecasting regional climate features. </li>
 
 <ol>
 <li> We will perform error analysis (RMS error or F-test) on our fitted models. </li>

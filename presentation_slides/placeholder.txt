@@ -1,0 +1,2 @@
+This is here as a placeholder for the directory.
+Once the slides are complete, upload them to this directory in the repo and delete this file!
