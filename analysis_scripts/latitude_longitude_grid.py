@@ -3,12 +3,15 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+import time
 import plotly.express as px
 import plotly.io as pio
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import root_mean_squared_error
+import csv
 import sys
 from sklearn.pipeline import Pipeline 
+from sklearn.preprocessing import StandardScaler
 sns.set_style("whitegrid")
 
 # Specify directory string in which you have the data file stored
@@ -16,6 +19,8 @@ user_specified_directory = '/mnt/d/Erdos_DIR/project_data_TAWNYFILE_DIR/combined
 
 # Read in data
 data = pd.read_csv(user_specified_directory)
+data['TMIN'] = data['TMIN'] + 273.15
+data['TMAX'] = data['TMAX'] + 273.15
 data['TAVG'] = (data['TMIN'] + data['TMAX']) / 2.0
 
 ######################## INPUTS SECTION #######################################
@@ -35,7 +40,7 @@ ilong = 8
 min_data_pts = 10
 
 # Specify timeline parameters
-year_start = 2000                                                     # initial year
+year_start = 2000                                                    # initial year
 year_end   = 2024                                                     # final year
 delta_year = 2                                                        # spacing between years
 test_size  = 0.06 #0.2                                                # percentage size of test set
@@ -56,7 +61,7 @@ nYfc = 30
 # (3) plotting the last validation step, (4) saving the test data, and (5) plotting the geographical feature data
 save_errors          = False
 plot_each_validation = False
-plot_last_validation = True
+plot_last_validation = False
 save_test_data       = False
 plotdata             = False
 
@@ -129,11 +134,8 @@ def data_clean_split_single_feature(data, min_data_pts, years, nTrain, nHorizon,
                     else:
                         x_test[year-nTrain, lat-1, long-1] = float(np.mean(df_new[feature]))
 
-                        # Plot all solution types for the current year in the loop
-                        # Build new dataframe with grid-cell-averaged data
-
-        if(plotdata and year==len(years)-1):
-            # Create geographical plot of feature data at final year in the current cross-validation step
+        # Create geographical plot of feature data at final year in the current cross-validation step
+        if(plotdata and year==len(years)-1):    
             coarse_df = pd.DataFrame.from_dict({'FEATURE' : x_array, 
                                             'LATITUDE' : lat_array, 
                                             'LONGITUDE' : long_array,
@@ -315,7 +317,7 @@ longlabel = [i+1 for i in range(0,len(longitude)-1)]
 data['LATITUDE_BIN']  = pd.cut(x=data['LATITUDE'],  bins=latitude,  labels=latlabel)
 data['LONGITUDE_BIN'] = pd.cut(x=data['LONGITUDE'], bins=longitude, labels=longlabel)
 
-# Number of cross validation set
+# Number of cross validation sets
 nCross = int(np.floor(len(years[0:nYear-nTest]) - (ltrain + lhorizon)) / iterate) 
 if(nCross < 1.):
     print('Number of cross validation sets is invalid')
@@ -381,18 +383,30 @@ while iE_test <= len(years)-nTest:
     errors[i_cross, :, :] = RMSe(test=xvalid, forecast=xforecast, nH=lhorizon, nLat=nlat, nLong=nlong)
 
     if(save_errors and iE_test == len(years)-nTest):
+        
         # Compute projection to nth year in the future (for demonstration purposes)
         years_forecast_Project = np.linspace(years_new[len(years_new)-1],year_end_forecast,nYfc)
         forecast_Project       = np.zeros(shape=(len(years_forecast_Project),nlat,nlong))
         coef_Project           = np.zeros(shape=(nlat,nlong))
         intercept_Project      = np.zeros(shape=(nlat,nlong))
         feature_delta          = np.zeros(shape=(nlat,nlong))
+        frac_diff              = np.zeros(shape=(nlat,nlong))
+        pltpoint_size          = np.ones(shape=(nlat,nlong)) * 5.
+        xtrain_mean            = np.abs(np.mean(xtrain[iB_train:iE_train,:,:], axis=0))
+        lat_2D                 = np.zeros(shape=(nlat, nlong))
+        long_2D                = np.zeros(shape=(nlat, nlong))
         for i in range(0,nlat):
             for j in range(0,nlong):
+                lat_2D[i,j] = latlabel[i]-1
+                long_2D[i,j] = longlabel[j]-1
                 forecast_Project[:,i,j], coef_Project[i,j], intercept_Project[i,j] = \
                     model_formation(time_train=years_new[0:ltrain].reshape(-1,1), data_train=xtrain[0:ltrain,i,j], model=reg_model, time_forecast=years_forecast_Project[:].reshape(-1,1))
                 feature_delta[i,j] = forecast_Project[nYfc-1,i,j] - forecast_Project[0,i,j]
-        
+
+                # Compute performance measure (RMS error wrt train data mean)
+                if(xtrain_mean[i,j]!=0.):
+                    frac_diff[i,j] = 100. * np.abs(1. - np.abs(xtrain_mean[i,j] - errors[i_cross,i,j]) / xtrain_mean[i,j])
+
         # Build data structure for errors + model properties
         error_file = 'error_ncross_'+str(i_cross+1)+'_minYear_'+str(years[0])+'_maxYear_'+str(years[len(years)-1])+'_var_'+user_feature
         columns = {'longitude (mean)':long_grid.reshape(-1,1)[:,0],
@@ -402,10 +416,15 @@ while iE_test <= len(years)-nTest:
                    'intercept':xintercept.reshape(-1,1)[:,0], 
                    'slope':xcoef.reshape(-1,1)[:,0], 
                    'RMS errors (relative to final validation set, NOT test set)':errors[i_cross, :, :].reshape(-1,1)[:,0],
-                   'feature delta':feature_delta.reshape(-1,1)[:,0]}
+                   'feature delta':feature_delta.reshape(-1,1)[:,0],
+                   'Performance measure (%)':frac_diff.reshape(-1,1)[:,0],
+                   'plot point size':pltpoint_size.reshape(-1,1)[:,0],
+                   'lat label': lat_2D.reshape(-1,1)[:,0],
+                   'long label': long_2D.reshape(-1,1)[:,0]}
         df_errors = pd.DataFrame(columns)
         df_filter = df_errors[(df_errors != 0).all(axis=1)] # Remove any zero entries
         df_filter.to_csv(error_file+'.csv', index=False)
+
         # Plot only the final validation step for a specified coordinate
         if(plot_last_validation):
             plt.figure(i_cross)
@@ -419,7 +438,7 @@ while iE_test <= len(years)-nTest:
             plt.xlabel(r'Year', fontsize = fs_label)
             plt.tight_layout()
             if(user_feature=='TMAX'):
-                plt.ylabel(r'$T_{\mathrm{max}}$ [degrees Celcius]', fontsize = fs_label)
+                plt.ylabel(r'$T_{\mathrm{max}}$ [K]', fontsize = fs_label)
             elif(user_feature=='SNOW'):
                 plt.ylabel(r'Snowfall [mm]')
             elif(user_feature=='PRCP'):
@@ -427,12 +446,12 @@ while iE_test <= len(years)-nTest:
             elif(user_feature=='HTDD'):
                 plt.ylabel(r'Heating degree days')
             elif(user_feature=='TAVG'):
-                plt.ylabel(r'$T_{\mathrm{avg}}$ [degrees Celcius]')
+                plt.ylabel(r'$T_{\mathrm{avg}}$ [K]')
             elif(user_feature=='TMIN'):
-                plt.ylabel(r'$T_{\mathrm{min}}$ [degrees Celcius]')
+                plt.ylabel(r'$T_{\mathrm{min}}$ [K]')
             plt.legend(fontsize = fs_legend)
 
-    # Plot results (if selected)
+    # Plot results at all steps (if selected)
     if(plot_each_validation):
         plt.figure(i_cross)
         plt.plot(years[0:iE_train], xtrain[0:iE_train, ilat, ilong], linewidth=3.0, color='black', label='train data')
@@ -444,7 +463,7 @@ while iE_test <= len(years)-nTest:
         plt.xlabel(r'Year', fontsize = fs_label)
         plt.tight_layout()
         if(user_feature=='TMAX'):
-            plt.ylabel(r'$T_{\mathrm{max}}$ [degrees Celcius]', fontsize = fs_label)
+            plt.ylabel(r'$T_{\mathrm{max}}$ [K]', fontsize = fs_label)
         elif(user_feature=='SNOW'):
             plt.ylabel(r'Snowfall [mm]')
         elif(user_feature=='PRCP'):
@@ -452,9 +471,9 @@ while iE_test <= len(years)-nTest:
         elif(user_feature=='HTDD'):
             plt.ylabel(r'Heating degree days')
         elif(user_feature=='TAVG'):
-            plt.ylabel(r'$T_{\mathrm{avg}}$ [degrees Celcius]')
+            plt.ylabel(r'$T_{\mathrm{avg}}$ [K]')
         elif(user_feature=='TMIN'):
-            plt.ylabel(r'$T_{\mathrm{min}}$ [degrees Celcius]')
+            plt.ylabel(r'$T_{\mathrm{min}}$ [K]')
         plt.legend(fontsize = fs_legend)
 
     # Iteration cross validation indices
