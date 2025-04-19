@@ -31,6 +31,14 @@ The major steps in this project include the following:
 <li>Compare climate features between different regions and address the statement of the proposal</li>
 </ol>
 
+## Project data
+<code>data</code> contains the zipped data used for this project.
+<ol>
+<li>Execute <code>cd data/</code> and <code>tar -xzvf compressedFile.tar.gz</code> to extract the data used in this project.</li>
+</ol>
+
+The scripts under <code>datagen_scripts</code> may be used to produce different data sets if the user provides the data files.
+
 ## Directories and Scripts
 <code>deliverables</code> contains the project proposal, mission plan, KPIs, and list of stakeholders.
 
@@ -41,11 +49,6 @@ The major steps in this project include the following:
 </ol>
 
 <code>plots</code> contains select figures from the exploratory data analysis process under the <code>EDA</code> subdirectory and final presentation plots under the <code>Presentable</code> subdirectory.
-
-<code>data</code> contains the zipped data used for this project.
-<ol>
-<li>Execute <code>cd data/</code> and <code>tar -xzvf compressedFile.tar.gz</code> to extract the data used in this project.</li>
-</ol>
 
 <code>analysis_scripts</code> contains the scripts used for performing exploratory data analysis, creating structured grids, building predictive models, and performing error analysis.
 <ol>
