@@ -1,7 +1,5 @@
-<h1> data_science_boot_camp_2025_project </h1>
+<h1> Today's Texas Might be Tomorrow's Ohio: Building a Geographic Climate Change Predictor </h1>
 <h2> Group members: Alison Duck, Jack Neustadt, David Pochik, Tawny Sit </h2>
-
-<p> <strong>Today's Texas Might be Tomorrow's Ohio: Building a Geographic Climate Change Predictor</strong> </p>
 
 ## Project Overview
 From the dawn of industrialization to today, the average global temperature has shifted upward by ~2.7 degrees Fahrenheit (~1.5 degrees Celsius) due to increased greenhouse gas emissions. The effects of this temperature increase have led to, among many other complications, more extreme weather patterns, increased sea levels, and hotter days. If emissions are left unchecked and temperatures continue to rise at their current (or projected) rate, then this will lead to drastic shifts in regional climate. For example, today's annual average temperature in Ohio will increase to that of today's annual temperature in Texas in Y years.
