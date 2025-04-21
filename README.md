@@ -57,8 +57,10 @@ The scripts under <code>datagen_scripts</code> may be used to produce different 
 <code>analysis_scripts</code> contains the scripts used for performing exploratory data analysis, creating structured grids, building predictive models, and performing error analysis.
 <ol>
 <li><code>latitude_longitude_grid.py</code>: Organizes climate data into user-specified latitude/longitude grid lines with refinement <code>nlat</code> and <code>nlong</code>. Defaults are set to <code>10</code>. Computes mean temperature (min, max, and avg), precipitation, snowfall, and heating degree days within each grid cell for user-specified <code>years</code>. Creates a train/test time-series split with n-fold cross validation and performs simple linear regression on mean climate quantities.</li>
-<li><code>KMeans_Binning.py</code>: </li>
-<li><code>alison_temp_map.py</code>: </li>
+<li><code>KMeans_Binning.py</code>: Performs the K-means clustering and KNN classification binning method. Generates a CSV file of the binned data, (<code>binned_k100_1950to2024.csv</code>), a CSV file of the individual stations from 1950 to 2024 tagged by cluster membership (<code>combined_GSOY_us48_1950to2024_clustertagged.csv</code>), a decision boundary plot for every year from 1950 to 2024, and the GIF combining the plots (<code>k100_binning_animated.gif</code>).</li>
+<li><code>preliminary_temperature_map.py.py</code>: This script is a paired down version of the full gridding method and linear regression for the average daily maximum temperature for each year. The script requires the data <code>combined_us_GSOY_data.csv</code> to be in the same directory as the script itself. The script uses the information from US weather stations from 1950 to 2010 and places each station into one of 100 equally sized bins. It then computes the average daily maximum temperature for each year across all the stations in each bins. Next it preforms a linear regression and computes the room mean square error to assess the suitability of the regression to describe our data set. These values are reported in a csv file saved to the same directory as the script.</li>
+<li><code>KMeans_Cluster_Regression.ipynb</code>: Jupyter notebook for performing regression on the K-Means+KNN binned data. Both linear and quadratic regression models are explored for the six features considered in the project using 5-fold cross validation (horizon length = 10 years) and explanation of final model selection. Performs preliminary analysis on final RMSE values of the test set. Generates external figures for all 100 k-means clusters showing both models for the final validation set (validated on 2011-2020) and the final selected model for the test set (2021-2024). Generates prerequisite CSV files for running <code>classification_demo.ipynb</code> (<code>quadratic_preferred.csv</code>, <code>2050_quadratic_diffs.csv</code>, and <code>2050_linear_diffs.csv</code>).</li>
+<li><code>classification_demo.ipynb</code>: This is a notebook that runs the climate change classification from building the classifier to re-classifying weather stations based on climate-change trends.</li>
 </ol>
 
 ## Software Requirements
@@ -74,4 +76,6 @@ The analysis scripts run on <code>Python</code> (version 3.12.x or later). The P
 <li><code>plotly.io</code></li>
 <li><code>os</code></li>
 <li><code>cartopy</code></li>
+<li><code>glob</code></li>
+<li><code>PIL (pillow)</code></li>
 </ol>
