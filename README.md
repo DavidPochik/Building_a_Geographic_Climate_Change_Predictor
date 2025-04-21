@@ -78,4 +78,5 @@ The analysis scripts run on <code>Python</code> (version 3.12.x or later). The P
 <li><code>cartopy</code></li>
 <li><code>glob</code></li>
 <li><code>PIL (pillow)</code></li>
+<li><code>geopandas</code></li>
 </ol>
