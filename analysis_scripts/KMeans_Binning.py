@@ -64,6 +64,9 @@ inductive_learner = InductiveClusterer(clusterer, classifier).fit(spatial_cluste
 gsoy_df_reg_years = gsoy_df[gsoy_df['DATE'].between(1950,2024)].copy()
 gsoy_df_reg_years['Cluster_ID'] = inductive_learner.predict(gsoy_df_reg_years[['LONGITUDE', 'LATITUDE']])
 
+# save the yet-unbinned but cluster-tagged dataset
+gsoy_df_reg_years.to_csv('data/combined_GSOY_us48_1950to2024_clustertagged.csv')
+
 # save the coordinates of the cluster centers (i.e., the K-means centroids)
 cluster_centers = inductive_learner.clusterer_.cluster_centers_
 
